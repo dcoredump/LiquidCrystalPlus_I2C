@@ -1,6 +1,6 @@
 //YWROBOT
-#ifndef LiquidCrystal_I2C_h
-#define LiquidCrystal_I2C_h
+#ifndef LiquidCrystalPlus_I2C_h
+#define LiquidCrystalPlus_I2C_h
 
 #include <inttypes.h>
 #include "Print.h" 
@@ -52,9 +52,9 @@
 #define Rw B00000010  // Read/Write bit
 #define Rs B00000001  // Register select bit
 
-class LiquidCrystal_I2C : public Print {
+class LiquidCrystalPlus_I2C : public Print {
 public:
-  LiquidCrystal_I2C(uint8_t lcd_Addr,uint8_t lcd_cols,uint8_t lcd_rows);
+  LiquidCrystalPlus_I2C(uint8_t lcd_Addr,uint8_t lcd_cols,uint8_t lcd_rows);
   void begin(uint8_t cols, uint8_t rows, uint8_t charsize = LCD_5x8DOTS );
   void clear();
   void home();
@@ -109,7 +109,9 @@ void off();
 uint8_t init_bargraph(uint8_t graphtype);
 void draw_horizontal_graph(uint8_t row, uint8_t column, uint8_t len,  uint8_t pixel_col_end);
 void draw_vertical_graph(uint8_t row, uint8_t column, uint8_t len,  uint8_t pixel_col_end);
-	 
+
+  void show(uint8_t y, uint8_t x, uint8_t fs, char *str);
+  void show(uint8_t y, uint8_t x, uint8_t fs, long num);
 
 private:
   void init_priv();
@@ -126,6 +128,9 @@ private:
   uint8_t _cols;
   uint8_t _rows;
   uint8_t _backlightval;
+
+  void _show(uint8_t pos_y, uint8_t pos_x, uint8_t field_size, char *str, bool justify_right, bool fill_zero);
+
 };
 
 #endif
